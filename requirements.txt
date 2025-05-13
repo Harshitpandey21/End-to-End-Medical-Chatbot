@@ -9,4 +9,5 @@ langchain_community
 langchain-groq
 langchain_experimental
 groq
+flask_session
 -e .
