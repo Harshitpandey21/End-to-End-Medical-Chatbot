@@ -64,23 +64,19 @@ def get_response():
     msg = request.form["msg"]
     input_text = msg
 
-    # Initialize chat history if not present
     if "chat_history" not in session:
         session["chat_history"] = []
 
-    # Convert session's chat_history to actual LangChain message objects
     chat_history = [
         HumanMessage(content=entry["user"]) if i % 2 == 0 else AIMessage(content=entry["bot"])
         for i, entry in enumerate(session["chat_history"])
     ]
 
-    # Get response from model
     response = rag_chain.invoke({
         "input": input_text,
         "chat_history": chat_history
     })
 
-    # Append to chat history
     session["chat_history"].extend([
         {"user": input_text},
         {"bot": response['answer']}
